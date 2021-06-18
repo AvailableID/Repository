@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiwang.graduate.mapper.UserMapper">
+    <select id="findByUserNameAndPassword" resultType="com.yiwang.graduate.entity.User" >
+        select * from user where user_name = #{userName} and password = #{password}
+    </select>
+
+    <delete id="deleteUserId" parameterType="int">
+        delete from user where userid= #{value}
+    </delete>
+
+    <delete id="delAllUser">
+        delete from user where userid in
+        <foreach collection="list" item="userid" open="(" close=")" separator=",">
+            #{userid}
+        </foreach>
+    </delete>
+
+    <update id="updateUser" parameterType="com.yiwang.graduate.entity.User">
+        update user
+        set userid = #{userid} ,user_name= #{userName} , password= #{password} ,gender = #{gender} ,
+         address= #{address} , mobile= #{mobile} , email= #{email}
+        where userid = #{userid}
+    </update>
+
+    <select id="findUserByName" parameterType="String" resultType="com.yiwang.graduate.entity.User">
+        select * from user where user_name = #{userName}
+    </select>
+
+    <insert id="userRegister" parameterType="com.yiwang.graduate.entity.User">
+        insert into user(user_name,password,gender,address,mobile,email)
+        value (#{userName},#{password},#{gender},#{address},#{mobile},#{email})
+    </insert>
+
+</mapper>

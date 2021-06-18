@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiwang.graduate.mapper.GoodsCoverMapper">
+    <select id="findByGoodsId" parameterType="int" resultType="com.yiwang.graduate.entity.GoodsCover">
+        select * from goods_cover where goods_id = #{value} order by gc_order
+    </select>
+</mapper>

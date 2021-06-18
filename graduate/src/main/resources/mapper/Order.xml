@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiwang.graduate.mapper.OrderMapper">
+    <insert id="insertOrder" parameterType="com.yiwang.graduate.entity.GoodsOrder">
+        insert into goods_order(goods_id ,order_no ,order_status , userid, create_time)
+        value (#{goodsId} , #{orderNo} , #{orderStatus} , #{userid} , #{createTime})
+        <selectKey resultType="int" keyProperty="orderId">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <select id="findByOrderNo" parameterType="java.lang.String" resultType="com.yiwang.graduate.entity.GoodsOrder">
+        select * from goods_order where order_no = #{value}
+    </select>
+
+    <delete id="deleteOrder" parameterType="int">
+        delete from goods_order where order_id = #{orderId}
+    </delete>
+
+    <delete id="delAllUser">
+        delete from goods_order where order_id in
+        <foreach collection="list" item="order_id" open="(" close=")" separator=",">
+            #{order_id}
+        </foreach>
+    </delete>
+
+    <update id="updateOrder" parameterType="com.yiwang.graduate.entity.GoodsOrder">
+        update goods_order set order_id = #{orderId}, goods_id= #{goodsId}, order_no= #{orderNo},
+         order_status = #{orderStatus},userid= #{userid}
+        where order_id = #{orderId}
+    </update>
+</mapper>
+
+<!--order的表名变成关键字了有没有影响-->
